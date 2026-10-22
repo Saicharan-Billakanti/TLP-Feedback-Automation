@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "TLP Feedback Autofill",
+  "version": "2.0",
+  "description": "Selects the first option for each TLP feedback question, clicks Save & Next, and fetches the OTP from Outlook Web.",
+  "permissions": ["tabs", "storage"],
+  "host_permissions": [
+    "https://outlook.office.com/*",
+    "https://outlook.office365.com/*",
+    "https://outlook.live.com/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://outlook.office.com/*",
+        "https://outlook.office365.com/*",
+        "https://outlook.live.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://outlook.office.com/*",
+        "https://outlook.office365.com/*",
+        "https://outlook.live.com/*"
+      ],
+      "js": ["outlook.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
